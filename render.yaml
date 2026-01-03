@@ -2,6 +2,7 @@ services:
   # Flask Web Service
   - type: web
     name: flask-app
+    plan: free
     runtime: python
     buildCommand: "cd flask-production-app && pip install -r requirements.txt && flask db upgrade"
     startCommand: "cd flask-production-app && gunicorn wsgi:app"
