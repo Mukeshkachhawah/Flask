@@ -44,13 +44,17 @@ def create_app(config_name='default'):
     def not_found(error):
         return jsonify({'error': 'Not found'}), 404
     
-    @app.errorhandler(500)
-    def internal_error(error):
+    @app.errorhandler(Exception)
+    def handle_exception(e):
         # Log error to stderr for Render logs
         import traceback
         import sys
-        print(f"ERROR: {str(error)}", file=sys.stderr)
+        print(f"CRITICAL ERROR: {str(e)}", file=sys.stderr)
         traceback.print_exc(file=sys.stderr)
-        return jsonify({'error': 'Internal server error', 'message': str(error)}), 500
+        return jsonify({
+            'error': 'Internal server error',
+            'message': str(e),
+            'type': e.__class__.__name__
+        }), 500
     
     return app
