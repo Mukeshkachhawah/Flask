@@ -17,10 +17,18 @@ COPY . .
 
 # Create non-root user
 RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
+
+# Expose port (Render uses dynamic $PORT)
+EXPOSE 10000
+
+# Copy and set permissions for entrypoint script
+# Note: we use root temporarily to set permissions
+USER root
+RUN chmod +x entrypoint.sh
 USER appuser
 
-# Expose port
-EXPOSE 5000
+# Environment variable for port (default to 10000)
+ENV PORT=10000
 
-# Run application
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "wsgi:app", "--workers", "4", "--timeout", "120"]
+# Run entrypoint script
+CMD ["./entrypoint.sh"]
