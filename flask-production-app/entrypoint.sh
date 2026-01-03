@@ -10,7 +10,7 @@ sleep 2
 echo "Running migrations..."
 if ! flask db upgrade; then
     echo "Migrations failed, trying to create tables directly..."
-    python -c "from run import app; from app.utils.database import db; with app.app_context(): db.create_all()"
+    python -c "from wsgi import app; from app.utils.database import db; with app.app_context(): db.create_all()"
 fi
 
 # Start Gunicorn
