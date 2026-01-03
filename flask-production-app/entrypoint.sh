@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Set Flask App
-export FLASK_APP=run.py
+# Set Flask App (using wsgi.py for production config)
+export FLASK_APP=wsgi.py
 
 # Wait for DB (optional but helpful)
 sleep 2
