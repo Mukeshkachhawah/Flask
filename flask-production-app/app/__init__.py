@@ -10,10 +10,8 @@ def create_app(config_name='default'):
     """Application factory"""
     app = Flask(__name__)
     
-    # Load configuration
     app.config.from_object(config[config_name])
     
-    # Initialize extensions
     CORS(app)
     init_db(app)
     
