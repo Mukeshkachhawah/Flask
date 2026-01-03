@@ -46,6 +46,11 @@ def create_app(config_name='default'):
     
     @app.errorhandler(500)
     def internal_error(error):
-        return jsonify({'error': 'Internal server error'}), 500
+        # Log error to stderr for Render logs
+        import traceback
+        import sys
+        print(f"ERROR: {str(error)}", file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
+        return jsonify({'error': 'Internal server error', 'message': str(error)}), 500
     
     return app
