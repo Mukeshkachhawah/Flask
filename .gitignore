@@ -1,6 +1,0 @@
-env/
-__pycache__/
-*.pyc
-.env
-flask-production-app/instance/
-flask-production-app/__pycache__/
